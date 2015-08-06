@@ -8,7 +8,6 @@
                  android:layout_width="match_parent"
                  android:layout_height="290dp"
                  android:layout_gravity="bottom"
-                 android:clipChildren="false"
                  android:orientation="vertical">
 
         <com.mingle.widget.SweetView
@@ -22,6 +21,7 @@
             android:layout_width="fill_parent"
             android:overScrollMode="never"
             android:layout_height="wrap_content"
+            android:clipChildren="false"
             android:layoutAnimation="@anim/rv_layout_animation"
             android:layout_gravity="bottom"
             />

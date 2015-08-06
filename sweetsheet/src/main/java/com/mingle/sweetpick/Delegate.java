@@ -101,7 +101,7 @@ public abstract class Delegate implements View.OnClickListener {
 
 
     public void dismiss() {
-        if (getStatus() != SweetSheet.Status.SHOW) {
+        if (getStatus() == SweetSheet.Status.DISMISS){
             return;
         }
         mBg.setClickable(false);

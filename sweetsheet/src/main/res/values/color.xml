@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="indicator_normal">#fff0f0f0</color>
+    <color name="indicator_select">#969696</color>
+    <color name="white">#ffffffff</color>
+    <color name="theme_gray">#F5F5F5</color>
+</resources>

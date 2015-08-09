@@ -7,7 +7,7 @@
 真机效果更赞哦.
 
 ###Usage:
-
+[![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-AndroidSweetSheet-green.svg?style=flat)](https://android-arsenal.com/details/1/2271)
 MainActivity.class
 ~~~
 
@@ -100,7 +100,7 @@ AlphaAnimation,Custom:
 
 ###FAQ
 怎么使包括 actionBar 在内的背景也虚化? 
-你有你使用 一个 FrameLayout或者RelativeLayout 里面使用 ToolBar 来替代 ActionBar 讲这个 FrameLayout 或者RelativeLayout作为SweetSheet 的父控件,
+使用 一个 FrameLayout或者RelativeLayout 里面使用 ToolBar 来替代 ActionBar 将这个 FrameLayout 或者RelativeLayout作为SweetSheet 的父控件传递进去,
 
 
 

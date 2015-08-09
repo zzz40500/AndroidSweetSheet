@@ -1,5 +1,6 @@
 package com.mingle.myapplication;
 
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -42,6 +43,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setupCustomView() {
+
+
+
         mSweetSheet3 = new SweetSheet(rl);
         CustomDelegate customDelegate = new CustomDelegate(true,
                 CustomDelegate.AnimationType.DuangLayoutAnimation);
@@ -82,9 +86,11 @@ public class MainActivity extends AppCompatActivity {
         // SweetSheet 控件,根据 rl 确认位置
         mSweetSheet = new SweetSheet(rl);
 
-        //设置数据源
-        mSweetSheet.setMenuList(R.menu.menu_sweet);
+        //设置数据源 (数据源支持设置 list 数组,也支持从菜单中获取)
+        mSweetSheet.setMenuList(list);
+        //根据设置不同的 Delegate 来显示不同的风格.
         mSweetSheet.setDelegate(new RecyclerViewDelegate(true));
+        //根据设置不同效果来显示背景效果BlurEffect:模糊效果.DimEffect 变暗效果
         mSweetSheet.setBackgroundEffect(new BlurEffect(8));
         //设置点击事件
         mSweetSheet.setOnMenuItemClickListener(new SweetSheet.OnMenuItemClickListener() {

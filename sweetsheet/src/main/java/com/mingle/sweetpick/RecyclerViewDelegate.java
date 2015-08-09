@@ -77,7 +77,7 @@ public class RecyclerViewDelegate extends Delegate  {
                 mRV.setOnTouchListener(new View.OnTouchListener() {
                     @Override
                     public boolean onTouch(View v, MotionEvent event) {
-                        return false;
+                        return true;
                     }
                 });
 
@@ -85,12 +85,7 @@ public class RecyclerViewDelegate extends Delegate  {
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                mRV.setOnTouchListener(new View.OnTouchListener() {
-                    @Override
-                    public boolean onTouch(View v, MotionEvent event) {
-                        return true;
-                    }
-                });
+                mRV.setOnTouchListener(null);
 
             }
 

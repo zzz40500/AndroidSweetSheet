@@ -3,8 +3,7 @@
 先发两张图:
 ![原型.GIF](http://upload-images.jianshu.io/upload_images/166866-deed43338a7c14d8.GIF?imageView2/2/w/1240)
 
-![效果图..gif](http://upload-images.jianshu.io/upload_images/166866-af752f0ff20e304d.gif?imageView2/2/w/1240)
-真机效果更赞哦.
+![效果图.gif](http://upload-images.jianshu.io/upload_images/166866-654e3acea860ca25.gif?imageView2/2/w/1240)
 
 ###Usage:
 [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-AndroidSweetSheet-green.svg?style=flat)](https://android-arsenal.com/details/1/2271)

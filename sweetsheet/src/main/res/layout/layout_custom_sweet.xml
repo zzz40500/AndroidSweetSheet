@@ -5,6 +5,7 @@
              android:orientation="vertical">
 
     <com.mingle.widget.FreeGrowUpParentRelativeLayout
+
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/freeGrowUpParentF"
         xmlns:android="http://schemas.android.com/apk/res/android"
@@ -16,24 +17,24 @@
 
         <com.mingle.widget.SweetView
             android:id="@+id/sv"
+            android:layout_alignTop="@+id/rl"
+            android:layout_alignBottom="@+id/rl"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"/>
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/rv"
+        <RelativeLayout
+            android:id="@+id/rl"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:layout_gravity="bottom"
             android:paddingTop="70dp"
-            android:clipChildren="false"
-            android:layoutAnimation="@anim/rv_layout_animation"
-            android:overScrollMode="never"
             />
 
         <com.mingle.widget.CRImageView
             android:id="@+id/sliderIM"
             android:layout_width="40dp"
             android:layout_height="40dp"
+            android:layout_gravity="right"
             android:layout_alignParentRight="true"
             android:layout_marginTop="40dp"
             android:padding="10dp"

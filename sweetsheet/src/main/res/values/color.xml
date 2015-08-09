@@ -2,7 +2,10 @@
 <resources>
 
     <color name="indicator_normal">#fff0f0f0</color>
+
     <color name="indicator_select">#969696</color>
     <color name="white">#ffffffff</color>
     <color name="theme_gray">#F5F5F5</color>
+    <color name="slider_color_normal">#ffa6a6a6</color>
+    <color name="slider_color">#ff969696</color>
 </resources>

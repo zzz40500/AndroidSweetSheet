@@ -1,7 +1,11 @@
 package com.mingle.adapter;
 
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.view.PagerAdapter;
+import android.view.View;
+import android.view.ViewGroup;
+
+import com.mingle.viewhandler.MenuListViewHandler;
+
 import java.util.List;
 
 
@@ -12,47 +16,35 @@ import java.util.List;
  * @github: https://github.com/zzz40500
  *
  */
-public class ViewpagerAdapter extends FragmentStatePagerAdapter {
+public class ViewpagerAdapter extends PagerAdapter {
 
 
-    List<Fragment> mFragments = null;
-    List<CharSequence> titles = null;
+    List<MenuListViewHandler> mMenuListViewHandlers = null;
 
-    public ViewpagerAdapter(Fragment fragment, List<Fragment> fragments,
-                            List<CharSequence> titles) {
-        super(fragment.getChildFragmentManager());
-        this.mFragments = fragments;
-        this.titles = titles;
-
-    }
-
-    public ViewpagerAdapter(android.support.v4.app.FragmentManager manager, List<Fragment> fragments,
-                            List<CharSequence> titles) {
-        super(manager);
-        this.mFragments = fragments;
-        this.titles = titles;
-
-    }
-
-    @Override
-    public Fragment getItem(int arg0) {
-        return mFragments.get(arg0);
+    public ViewpagerAdapter(List<MenuListViewHandler> menuListViewHandlers) {
+        mMenuListViewHandlers = menuListViewHandlers;
     }
 
     @Override
     public int getCount() {
-        return mFragments.size();
+        return mMenuListViewHandlers.size();
     }
-
-    // @Override
-    // public int getItemPosition(Object object) {
-    // return POSITION_NONE;
-    // }
 
     @Override
-    public CharSequence getPageTitle(int position) {
-
-        return titles.get(position);
+    public boolean isViewFromObject(View arg0, Object arg1) {
+        return arg0 == arg1;
     }
 
+    @Override
+    public void destroyItem(ViewGroup container, int position, Object object) {
+
+        container.removeView(mMenuListViewHandlers.get(position).onCreateView(container));
+    }
+
+    @Override
+    public Object instantiateItem(ViewGroup container, int position) {
+        container.addView(mMenuListViewHandlers.get(position).onCreateView(container));
+
+        return mMenuListViewHandlers.get(position).onCreateView(container);
+    }
 }

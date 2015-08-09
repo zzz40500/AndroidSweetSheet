@@ -1,10 +1,9 @@
-package com.mingle.fragment;
+package com.mingle.viewhandler;
 
 
-import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +14,7 @@ import com.mingle.entity.MenuEntity;
 import com.mingle.sweetsheet.R;
 import com.mingle.sweetpick.SweetSheet;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author zzz40500
@@ -23,30 +22,25 @@ import java.util.ArrayList;
  * @date 2015/8/5.
  * @github: https://github.com/zzz40500
  */
-public class MenuListFragment extends Fragment {
+public class MenuListViewHandler {
 
 
-    private ArrayList<MenuEntity> mMenuEntities;
+    private List<MenuEntity> mMenuEntities;
     private int mIndex;
+
     private int mRvVisibility = View.VISIBLE;
     private OnFragmentInteractionListener mOnFragmentInteractionListener;
     private RecyclerView mRV;
     private MenuRVAdapter mMenuRVAdapter;
 
+    private View mView;
 
-    public MenuListFragment() {
-    }
 
-    public static MenuListFragment getInstant(int index, ArrayList<MenuEntity> menuEntities) {
-
-        MenuListFragment menuListFragment = new MenuListFragment();
-
-        Bundle bundle = new Bundle();
-        bundle.putInt("index", index);
-        bundle.putParcelableArrayList("mMenuEntities", menuEntities);
-        menuListFragment.setArguments(bundle);
-
-        return menuListFragment;
+    public static MenuListViewHandler getInstant(int index, List<MenuEntity> menuEntities) {
+        MenuListViewHandler menuListViewHandler = new MenuListViewHandler();
+        menuListViewHandler.mMenuEntities=menuEntities;
+        menuListViewHandler.mIndex=index;
+        return menuListViewHandler;
     }
 
 
@@ -55,21 +49,22 @@ public class MenuListFragment extends Fragment {
     }
 
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_menu_list, container, false);
+    public View onCreateView(ViewGroup container) {
+        if(mView == null){
+            mView =LayoutInflater.from(container.getContext()).inflate(R.layout.layout_grid_menu,container,false);
+            onViewCreated(mView);
+        }
+        return mView;
     }
 
-    @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+    public void onViewCreated(View view) {
 
-        mIndex = getArguments().getInt("index");
-        mMenuEntities = getArguments().getParcelableArrayList("mMenuEntities");
+        if(mMenuEntities == null || mMenuEntities.size()==0){
+            return;
+        }
 
         mRV = (RecyclerView) view.findViewById(R.id.rv);
-        mRV.setLayoutManager(new GridLayoutManager(getActivity(), 3));
+        mRV.setLayoutManager(new GridLayoutManager(view.getContext(), 3));
         mRV.setHasFixedSize(true);
         mMenuRVAdapter = new MenuRVAdapter(mMenuEntities, SweetSheet.Type.Viewpager);
         mMenuRVAdapter.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -83,7 +78,6 @@ public class MenuListFragment extends Fragment {
         });
         mRV.setAdapter(mMenuRVAdapter);
         mRV.setVisibility(mRvVisibility);
-
     }
 
 

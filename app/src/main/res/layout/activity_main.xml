@@ -5,6 +5,11 @@
                 android:background="#ff8b90af"
                 android:id="@+id/rl"
                 tools:context=".MainActivity">
+    <ImageView
+        android:layout_width="48dp"
+        android:src="@mipmap/ic_launcher"
+        android:layout_centerHorizontal="true"
+        android:layout_height="48dp"/>
 
 
 

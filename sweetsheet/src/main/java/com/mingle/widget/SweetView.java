@@ -31,6 +31,7 @@ public class SweetView extends View {
     private  int mMaxArcHeight;
     private  Status mStatus=Status.NONE;
     private AnimationListener mAnimationListener;
+    private    Path mPath = new Path();
 
     public enum Status{
         NONE,
@@ -112,7 +113,7 @@ public class SweetView extends View {
         valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
-                mArcHeight =(int) animation.getAnimatedValue();
+                mArcHeight = (int) animation.getAnimatedValue();
                 invalidate();
             }
         });
@@ -121,7 +122,7 @@ public class SweetView extends View {
 
             @Override
             public void onAnimationEnd(Animator animation) {
-                if(mAnimationListener != null) {
+                if (mAnimationListener != null) {
                     mAnimationListener.onEnd();
                 }
             }
@@ -135,7 +136,7 @@ public class SweetView extends View {
 
 
     private void drawBG(Canvas canvas) {
-        Path path = new Path();
+        mPath.reset();
         int currentPointY=0;
         switch (mStatus){
             case NONE:
@@ -150,18 +151,14 @@ public class SweetView extends View {
                 break;
         }
 
-        path.moveTo(0, currentPointY);
-        path.quadTo(getWidth() / 2,currentPointY- mArcHeight, getWidth(), currentPointY);
-        path.lineTo(getWidth(), getHeight());
-        path.lineTo(0, getHeight());
-        path.lineTo(0, currentPointY);
-        canvas.drawPath(path, mPaint);
+        mPath.moveTo(0, currentPointY);
+        mPath.quadTo(getWidth() / 2, currentPointY - mArcHeight, getWidth(), currentPointY);
+        mPath.lineTo(getWidth(), getHeight());
+        mPath.lineTo(0, getHeight());
+        mPath.lineTo(0, currentPointY);
+        canvas.drawPath(mPath, mPaint);
     }
 
-    public static int dip2px(Context context, float dipValue) {
-        final float scale = context.getResources().getDisplayMetrics().density;
-        return (int) (dipValue * scale + 0.5f);
-    }
 
 
     public AnimationListener getAnimationListener() {
@@ -174,7 +171,7 @@ public class SweetView extends View {
 
     public interface  AnimationListener{
 
-        void onStart();
+         void onStart();
         void onEnd();
         void onContentShow();
 

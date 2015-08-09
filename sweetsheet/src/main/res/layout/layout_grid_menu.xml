@@ -2,10 +2,8 @@
              xmlns:tools="http://schemas.android.com/tools"
              android:layout_width="match_parent"
              android:layout_height="match_parent"
-
              android:clipChildren="false"
-
-             tools:context="com.mingle.fragment.MenuListFragment">
+             tools:context="com.mingle.viewhandler.MenuListViewHandler">
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv"
         android:layout_marginTop="50dp"

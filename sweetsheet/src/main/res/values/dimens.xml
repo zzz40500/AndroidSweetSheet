@@ -4,4 +4,5 @@
     <dimen name="indicator_height">2dp</dimen>
     <dimen name="indicator_padding">2dp</dimen>
     <dimen name="arc_max_height">50dp</dimen>
+    <dimen name="sheet_height">290dp</dimen>
 </resources>

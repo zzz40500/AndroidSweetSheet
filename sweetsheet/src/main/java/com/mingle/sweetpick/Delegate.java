@@ -5,6 +5,7 @@ import android.support.v4.app.FragmentManager;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.DecelerateInterpolator;
+import android.widget.ImageView;
 
 import com.mingle.SimpleAnimationListener;
 import com.mingle.entity.MenuEntity;
@@ -27,20 +28,30 @@ public abstract class Delegate implements View.OnClickListener {
 
     protected ViewGroup mParentVG;
     protected View mRootView;
-    private View mBg;
+    private ImageView mBg;
+    private Effect mEffect;
+    private boolean mIsBgClickEnable=true;
 
     protected SweetSheet.OnMenuItemClickListener mOnMenuItemClickListener;
 
-    public void init(ViewGroup parentVG) {
+    protected void init(ViewGroup parentVG) {
         mParentVG = parentVG;
-        mBg = new View(parentVG.getContext());
+        mBg = new ImageView(parentVG.getContext());
         mRootView = createView();
         mBg.setOnClickListener(this);
     }
 
+    /**
+     * 生成视图
+     * @return
+     */
     protected abstract View createView();
 
-    protected abstract void setMenuList(FragmentManager fragmentManager, List<MenuEntity> list);
+    /**
+     * 设置数据源
+     * @param list
+     */
+    protected abstract void setMenuList(List<MenuEntity> list);
 
     protected void toggle() {
 
@@ -64,16 +75,21 @@ public abstract class Delegate implements View.OnClickListener {
         if (getStatus() != SweetSheet.Status.DISMISS) {
             return;
         }
-        mBg.setClickable(true);
+        mBg.setClickable(mIsBgClickEnable);
         showShowdown();
 
     }
 
 
+    /**
+     * 显示模糊背景
+     */
     protected void showShowdown() {
 
         ViewHelper.setTranslationY(mRootView, 0);
-        ViewGroup.LayoutParams lp = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        mEffect.effect(mParentVG,mBg);
+        ViewGroup.LayoutParams lp =
+                new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         mParentVG.addView(mBg, lp);
         ViewHelper.setAlpha(mBg, 0);
         ObjectAnimator objectAnimator = ObjectAnimator.ofFloat(mBg, "alpha", 0, 1);
@@ -81,8 +97,10 @@ public abstract class Delegate implements View.OnClickListener {
         objectAnimator.start();
     }
 
+    /**
+     * 隐藏模糊背景
+     */
     protected void dismissShowdown() {
-
 
         ObjectAnimator objectAnimator = ObjectAnimator.ofFloat(mBg, "alpha", 1, 0);
         objectAnimator.setDuration(400);
@@ -99,8 +117,10 @@ public abstract class Delegate implements View.OnClickListener {
         });
     }
 
-
-    public void dismiss() {
+    /**
+     * 消失
+     */
+    protected void dismiss() {
         if (getStatus() == SweetSheet.Status.DISMISS){
             return;
         }
@@ -130,17 +150,20 @@ public abstract class Delegate implements View.OnClickListener {
 
     }
 
-    protected void setBackgroundDim(float dim) {
 
-        mBg.setBackgroundColor(Color.argb((int) (150 * dim), 150, 150, 150));
+    protected void setBackgroundEffect(Effect effect) {
+        mEffect=effect;
 
     }
 
-    public void setOnMenuItemClickListener(SweetSheet.OnMenuItemClickListener onItemClickListener) {
+    protected void setOnMenuItemClickListener(SweetSheet.OnMenuItemClickListener onItemClickListener) {
         mOnMenuItemClickListener = onItemClickListener;
     }
 
 
+    /**
+     * 延时消失
+     */
     protected void delayedDismiss() {
 
 
@@ -152,7 +175,7 @@ public abstract class Delegate implements View.OnClickListener {
         }, 300);
     }
 
-    public SweetSheet.Status getStatus() {
+    protected SweetSheet.Status getStatus() {
         return mStatus;
     }
 
@@ -161,5 +184,9 @@ public abstract class Delegate implements View.OnClickListener {
         dismiss();
 
 
+    }
+
+    public void setBackgroundClickEnable(boolean isBgClickEnable){
+        mIsBgClickEnable=isBgClickEnable;
     }
 }

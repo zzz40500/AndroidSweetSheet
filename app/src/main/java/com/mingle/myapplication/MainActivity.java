@@ -2,31 +2,71 @@ package com.mingle.myapplication;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
+
 import com.mingle.entity.MenuEntity;
+import com.mingle.sweetpick.BlurEffect;
+import com.mingle.sweetpick.CustomDelegate;
+import com.mingle.sweetpick.DimEffect;
+import com.mingle.sweetpick.RecyclerViewDelegate;
 import com.mingle.sweetpick.SweetSheet;
+import com.mingle.sweetpick.ViewPagerDelegate;
+
+
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
     private SweetSheet mSweetSheet;
     private SweetSheet mSweetSheet2;
+    private SweetSheet mSweetSheet3;
+    private RelativeLayout rl;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
-        RelativeLayout rl = (RelativeLayout) findViewById(R.id.rl);
 
-        final ArrayList<MenuEntity> list=new ArrayList<>();
+        rl = (RelativeLayout) findViewById(R.id.rl);
+        setupViewpager();
+        setupRecyclerView();
+        setupCustomView();
 
+    }
 
+    private void setupCustomView() {
+        mSweetSheet3 = new SweetSheet(rl);
+        CustomDelegate customDelegate = new CustomDelegate(true,
+                CustomDelegate.AnimationType.DuangLayoutAnimation);
+        View view = LayoutInflater.from(this).inflate(R.layout.layout_custom_view, null, false);
+        customDelegate.setCustomView(view);
+        mSweetSheet3.setDelegate(customDelegate);
+        view.findViewById(R.id.button2).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mSweetSheet3.dismiss();
+            }
+        });
+    }
+
+    private void setupRecyclerView() {
+
+        ArrayList<MenuEntity> list = new ArrayList<>();
         //添加假数据
-        MenuEntity menuEntity=new MenuEntity();
-        menuEntity.resId=R.drawable.ic_account_child;
-        menuEntity.name="QQ";
+        MenuEntity menuEntity1 = new MenuEntity();
+        menuEntity1.iconId = R.drawable.ic_account_child;
+        menuEntity1.title = "code";
+        MenuEntity menuEntity = new MenuEntity();
+        menuEntity.iconId = R.drawable.ic_account_child;
+        menuEntity.title = "QQ";
+        list.add(menuEntity1);
         list.add(menuEntity);
         list.add(menuEntity);
         list.add(menuEntity);
@@ -39,38 +79,44 @@ public class MainActivity extends AppCompatActivity {
         list.add(menuEntity);
         list.add(menuEntity);
         list.add(menuEntity);
-        list.add(menuEntity);
+        // SweetSheet 控件,根据 rl 确认位置
+        mSweetSheet = new SweetSheet(rl);
 
-        //根据Type生成对应的样式 SweetSheet 控件,根据 rl 确认位置
-        mSweetSheet = new SweetSheet(rl, SweetSheet.Type.RecyclerView);
-
-        //设置数据源 FragmentManager 在样式为Viewpager 是必须的, RecyclerView样式可以为 null, 不影响运行
-        mSweetSheet.setMenuList(getSupportFragmentManager(), list);
-
-        mSweetSheet2 = new SweetSheet(rl, SweetSheet.Type.Viewpager);
-        mSweetSheet2.setMenuList(getSupportFragmentManager(),list);
-        //设置背景灰度
-        mSweetSheet.setBackgroundDim(0.8f);
-        mSweetSheet2.setBackgroundDim(0.4f);
-
+        //设置数据源
+        mSweetSheet.setMenuList(R.menu.menu_sweet);
+        mSweetSheet.setDelegate(new RecyclerViewDelegate(true));
+        mSweetSheet.setBackgroundEffect(new BlurEffect(8));
         //设置点击事件
         mSweetSheet.setOnMenuItemClickListener(new SweetSheet.OnMenuItemClickListener() {
             @Override
-            public boolean onItemClick(int position) {
+            public boolean onItemClick(int position, MenuEntity menuEntity1) {
 
                 //根据返回值, true 会关闭 SweetSheet ,false 则不会.
-                Toast.makeText(MainActivity.this,list.get(position).name+"  "+position,Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, menuEntity1.title + "  " + position, Toast.LENGTH_SHORT).show();
                 return true;
             }
         });
+
+
+    }
+
+    private void setupViewpager() {
+
+
+        mSweetSheet2 = new SweetSheet(rl);
+        mSweetSheet2.setMenuList(R.menu.menu_sweet);
+        mSweetSheet2.setDelegate(new ViewPagerDelegate());
+        mSweetSheet2.setBackgroundEffect(new DimEffect(0.5f));
         mSweetSheet2.setOnMenuItemClickListener(new SweetSheet.OnMenuItemClickListener() {
             @Override
-            public boolean onItemClick(int position) {
+            public boolean onItemClick(int position, MenuEntity menuEntity1) {
 
-                Toast.makeText(MainActivity.this,list.get(position).name+"  "+position,Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, menuEntity1.title + "  " + position, Toast.LENGTH_SHORT).show();
                 return true;
             }
         });
+
+
     }
 
     @Override
@@ -82,14 +128,14 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
 
-        if(mSweetSheet.isShow() || mSweetSheet2.isShow()){
-            if(mSweetSheet.isShow()){
+        if (mSweetSheet.isShow() || mSweetSheet2.isShow()) {
+            if (mSweetSheet.isShow()) {
                 mSweetSheet.dismiss();
             }
-            if(mSweetSheet2.isShow()){
+            if (mSweetSheet2.isShow()) {
                 mSweetSheet2.dismiss();
             }
-        }else{
+        } else {
             super.onBackPressed();
         }
 
@@ -98,19 +144,37 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+
         int id = item.getItemId();
         if (id == R.id.action_recyclerView) {
-            if(mSweetSheet2.isShow()){
+            if (mSweetSheet2.isShow()) {
                 mSweetSheet2.dismiss();
             }
+            if (mSweetSheet3.isShow()) {
+                mSweetSheet3.dismiss();
+            }
             mSweetSheet.toggle();
+
             return true;
         }
         if (id == R.id.action_viewpager) {
-            if(mSweetSheet.isShow()){
+            if (mSweetSheet.isShow()) {
                 mSweetSheet.dismiss();
             }
+            if (mSweetSheet3.isShow()) {
+                mSweetSheet3.dismiss();
+            }
             mSweetSheet2.toggle();
+            return true;
+        }
+        if (id == R.id.action_custom) {
+            if (mSweetSheet.isShow()) {
+                mSweetSheet.dismiss();
+            }
+            if (mSweetSheet2.isShow()) {
+                mSweetSheet2.dismiss();
+            }
+            mSweetSheet3.toggle();
             return true;
         }
         return super.onOptionsItemSelected(item);

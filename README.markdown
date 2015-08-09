@@ -77,15 +77,32 @@ view.findViewById(R.id.button2).setOnClickListener(new View.OnClickListener() {
 
 ###v1.1(版本说明)
 1. 去掉之前ViewPager 使用FragmentStatePagerAdapter 做为它的适配器.
+
 * SweetSheet 不支持 LinearLayout 作为它的父控件.
-* setMenuList 设置数据源的方法支持 List<MenuEntity>数组和菜单资源的填充.(菜单仅支持一级菜单,因为2级菜单我还没想好怎么展示).
-* setBackgroundEffect(Effect  effect) 提供对背景效果的支持,目前提供3种风格BlurEffect:模糊效果(支持模糊等级的设定).DimEffect 变暗效果(支持变暗效果等级的设置),NoneEffect没有效果.你可以继承Effect扩展背景的效果
-* setDelegate 目前提供了三种风格RecyclerViewDelegate,ViewPagerDelegate, CustomDelegate,
+
+* setMenuList 设置数据源支持从 List<MenuEntity>数组和Menu资源的填充.(Menu仅支持一级Menu,因为2级Menu我还没想好怎么展示).
+* setBackgroundEffect(Effect  effect) 提供对背景效果的支持,目前提供3种风格:
+BlurEffect:模糊效果,DimEffect 变暗效果,NoneEffect 没有效果.
+你也可以继承Effect扩展背景的效果
+
+* setDelegate 目前提供了三种风格
+RecyclerViewDelegate,ViewPagerDelegate,CustomDelegate.
+
 * CustomDelegate用于扩展类,你可以使用通过构造方法指定出现动画,通过setCustomView(View v)来设置你的自定义的布局.
-* CustomDelegate中提供了3种类型:DuangLayoutAnimation,DuangAnimation,AlphaAnimation,Custom:看名字大概就能知道它是什么效果.如果你对前3个效果不满意你就使用 Custom 这个类别,然后通过setCustomViewAnimation设置效果.
-* CRImageView 内部实现了 Android 5.0上面的CircleReveal效果.使用方法:CRImageView. circularReveal(int centerX, int centerY, float startRadius, float endRadius, long duration, Interpolator interpolator)你可以在你的项目中用上它.
+
+* CustomDelegate中提供了4种类型:
+DuangLayoutAnimation,DuangAnimation,
+AlphaAnimation,Custom:
+看名字大概就能知道它是什么效果.如果你对前3个效果不满意你就使用 Custom ,然后通过setCustomViewAnimation设置出现效果.
+
+* CRImageView 内部实现了 Android 5.0上面的CircleReveal效果.使用方法:`CRImageView. circularReveal(int centerX, int centerY, float startRadius, float endRadius, long duration, Interpolator interpolator)`你可以在你的项目中用上它.
 
 
 ###FAQ
 怎么使包括 actionBar 在内的背景也虚化? 
 你有你使用 一个 FrameLayout或者RelativeLayout 里面使用 ToolBar 来替代 ActionBar 讲这个 FrameLayout 或者RelativeLayout作为SweetSheet 的父控件,
+
+
+
+
+

@@ -114,7 +114,7 @@ public class MainActivity extends AppCompatActivity {
 
         //从menu 中设置数据源
         mSweetSheet2.setMenuList(R.menu.menu_sweet);
-        mSweetSheet2.setDelegate(new ViewPagerDelegate(4));
+        mSweetSheet2.setDelegate(new ViewPagerDelegate());
         mSweetSheet2.setBackgroundEffect(new DimEffect(0.5f));
         mSweetSheet2.setOnMenuItemClickListener(new SweetSheet.OnMenuItemClickListener() {
             @Override

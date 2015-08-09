@@ -3,50 +3,56 @@
 先发两张图:
 ![原型.GIF](http://upload-images.jianshu.io/upload_images/166866-deed43338a7c14d8.GIF?imageView2/2/w/1240)
 
-![效果图.gif](http://upload-images.jianshu.io/upload_images/166866-535117a26cd1e2dd.gif?imageView2/2/w/1240)
+![效果图..gif](http://upload-images.jianshu.io/upload_images/166866-af752f0ff20e304d.gif?imageView2/2/w/1240)
 真机效果更赞哦.
 
 ###Usage:
 
 MainActivity.class
 ~~~
-    //添加假数据
 
-    MenuEntity menuEntity=new MenuEntity();
-    menuEntity.resId=R.drawable.ic_account_child;
-    menuEntity.name="QQ";
-    list.add(menuEntity);
-    list.add(menuEntity);
-    list.add(menuEntity);
-    list.add(menuEntity);
-    list.add(menuEntity);
-    list.add(menuEntity);
-    list.add(menuEntity);
-    list.add(menuEntity);
-    list.add(menuEntity);
-    list.add(menuEntity);
-    list.add(menuEntity);
-    list.add(menuEntity);
-    list.add(menuEntity);
+// SweetSheet 控件,根据 rl 确认位置
+mSweetSheet = new SweetSheet(rl);
 
-    //根据Type生成对应的样式 SweetSheet 控件,根据 rl 确认位置
-    mSweetSheet = new SweetSheet(rl, SweetSheet.Type.RecyclerView);
-    //设置数据源 FragmentManager 在样式为Viewpager 是必须的, RecyclerView样式可以为 null, 不影响运行
-    mSweetSheet.setMenuList(getSupportFragmentManager(), list);
-    //设置背景灰度
-    mSweetSheet.setBackgroundDim(0.8f);
+//设置数据源 (数据源支持设置 list 数组,也支持从menu 资源中获取)
+mSweetSheet.setMenuList(list);
+//根据设置不同的 Delegate 来显示不同的风格.
+mSweetSheet.setDelegate(new RecyclerViewDelegate(true));
+//根据设置不同Effect来设置背景效果:BlurEffect 模糊效果.DimEffect 变暗效果,NoneEffect 没有效果.
+mSweetSheet.setBackgroundEffect(new BlurEffect(8));
+//设置菜单点击事件
+mSweetSheet.setOnMenuItemClickListener(new SweetSheet.OnMenuItemClickListener() {
+    @Override
+    public boolean onItemClick(int position, MenuEntity menuEntity1) {
 
-    //设置点击事件
-    mSweetSheet.setOnMenuItemClickListener(new SweetSheet.OnMenuItemClickListener() {
-    @Override
-    public boolean onItemClick(int position) {
-    //根据返回值, true 会关闭 SweetSheet ,false 则不会.
-            Toast.makeText(MainActivity.this,list.get(position).name+"             "+position,Toast.LENGTH_SHORT).show();
-        return true;
-        }
-    });
-
+        //根据返回值, true 会关闭 SweetSheet ,false 则不会.
+        Toast.makeText(MainActivity.this, menuEntity1.title + "  " + position, Toast.LENGTH_SHORT).show();
+        return true;
+    }
+});
 ~~~
+自定义扩展:
+~~~
+
+// SweetSheet 控件,根据 rl 确认位置
+mSweetSheet3 = new SweetSheet(rl);
+//定义一个 CustomDelegate 的 Delegate ,并且设置它的出现动画.
+CustomDelegate customDelegate = new CustomDelegate(true,
+        CustomDelegate.AnimationType.DuangLayoutAnimation);
+View view = LayoutInflater.from(this).inflate(R.layout.layout_custom_view, null, false);
+//设置自定义视图.
+customDelegate.setCustomView(view);
+//设置代理类
+mSweetSheet3.setDelegate(customDelegate);
+//因为使用了 CustomDelegate 所以mSweetSheet3中的 setMenuList和setOnMenuItemClickListener就没有效果了
+view.findViewById(R.id.button2).setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View v) {
+        mSweetSheet3.dismiss();
+    }
+});
+~~~
+
 
 监听返回
 ~~~
@@ -63,21 +69,23 @@ MainActivity.class
     }
 
 ~~~
-###Note:
-1. 目前SweetSheet支持的样式2种:SweetSheet.Type.RecyclerView 和 SweetSheet.Type.Viewpager
-* 关于:SweetSheet.setMenuList(FragmentManager fm, LIst<MenuEntity> list);
-第一个参数是用了做ViewPager的适配器使用的,类型SweetSheet.Type.RecyclerView 可以传null;
-* 暂不支持使用LinearLayout 作为mSweetSheet 的父控件.
 
-###Future (1.1):
-1. 支持从menu中创建.
-* 优化SweetSheet.Type.RecyclerView 的体验.
-* gradle的支持
-* 支持简单的扩展
+###gradle
+~~~
+在等等....
+~~~
+
+###v1.1(版本说明)
+1. 去掉之前ViewPager 使用FragmentStatePagerAdapter 做为它的适配器.
+* SweetSheet 不支持 LinearLayout 作为它的父控件.
+* setMenuList 设置数据源的方法支持 List<MenuEntity>数组和菜单资源的填充.(菜单仅支持一级菜单,因为2级菜单我还没想好怎么展示).
+* setBackgroundEffect(Effect  effect) 提供对背景效果的支持,目前提供3种风格BlurEffect:模糊效果(支持模糊等级的设定).DimEffect 变暗效果(支持变暗效果等级的设置),NoneEffect没有效果.你可以继承Effect扩展背景的效果
+* setDelegate 目前提供了三种风格RecyclerViewDelegate,ViewPagerDelegate, CustomDelegate,
+* CustomDelegate用于扩展类,你可以使用通过构造方法指定出现动画,通过setCustomView(View v)来设置你的自定义的布局.
+* CustomDelegate中提供了3种类型:DuangLayoutAnimation,DuangAnimation,AlphaAnimation,Custom:看名字大概就能知道它是什么效果.如果你对前3个效果不满意你就使用 Custom 这个类别,然后通过setCustomViewAnimation设置效果.
+* CRImageView 内部实现了 Android 5.0上面的CircleReveal效果.使用方法:CRImageView. circularReveal(int centerX, int centerY, float startRadius, float endRadius, long duration, Interpolator interpolator)你可以在你的项目中用上它.
 
 
-
-
-
-
-
+###FAQ
+怎么使包括 actionBar 在内的背景也虚化? 
+你有你使用 一个 FrameLayout或者RelativeLayout 里面使用 ToolBar 来替代 ActionBar 讲这个 FrameLayout 或者RelativeLayout作为SweetSheet 的父控件,

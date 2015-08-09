@@ -129,7 +129,7 @@ public class SweetView extends View {
 
         });
         valueAnimator.setDuration(500);
-        valueAnimator.setInterpolator(new OvershootInterpolator(5f));
+        valueAnimator.setInterpolator(new OvershootInterpolator(4f));
         valueAnimator.start();
 
     }

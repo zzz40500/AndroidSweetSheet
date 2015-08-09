@@ -35,11 +35,14 @@ public class MenuListViewHandler {
 
     private View mView;
 
+    private int mNumColumns;
 
-    public static MenuListViewHandler getInstant(int index, List<MenuEntity> menuEntities) {
+
+    public static MenuListViewHandler getInstant(int index,int numColums, List<MenuEntity> menuEntities) {
         MenuListViewHandler menuListViewHandler = new MenuListViewHandler();
         menuListViewHandler.mMenuEntities=menuEntities;
         menuListViewHandler.mIndex=index;
+        menuListViewHandler.mNumColumns=numColums;
         return menuListViewHandler;
     }
 
@@ -64,7 +67,7 @@ public class MenuListViewHandler {
         }
 
         mRV = (RecyclerView) view.findViewById(R.id.rv);
-        mRV.setLayoutManager(new GridLayoutManager(view.getContext(), 3));
+        mRV.setLayoutManager(new GridLayoutManager(view.getContext(), mNumColumns));
         mRV.setHasFixedSize(true);
         mMenuRVAdapter = new MenuRVAdapter(mMenuEntities, SweetSheet.Type.Viewpager);
         mMenuRVAdapter.setOnItemClickListener(new AdapterView.OnItemClickListener() {

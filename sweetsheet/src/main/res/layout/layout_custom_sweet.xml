@@ -12,22 +12,22 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/sheet_height"
         app:offset="@dimen/arc_max_height"
+        android:clipChildren="false"
         android:layout_gravity="bottom"
         >
 
         <com.mingle.widget.SweetView
             android:id="@+id/sv"
-            android:layout_alignTop="@+id/rl"
-            android:layout_alignBottom="@+id/rl"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="fill_parent"/>
 
         <RelativeLayout
             android:id="@+id/rl"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:layout_gravity="bottom"
-            android:paddingTop="70dp"
+            android:clipChildren="false"
+            android:layout_marginTop="70dp"
             />
 
         <com.mingle.widget.CRImageView

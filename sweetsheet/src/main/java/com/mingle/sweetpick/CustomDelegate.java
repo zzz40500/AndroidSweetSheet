@@ -24,7 +24,6 @@ import java.util.List;
  * @version 1.0
  * @date 2015/8/9.
  * @github: https://github.com/zzz40500
- *
  */
 public class CustomDelegate extends Delegate {
 
@@ -44,10 +43,18 @@ public class CustomDelegate extends Delegate {
 
     private ValueAnimator mContentViewValueAnimation;
 
+    private int mContentViewHeight;
+
 
     public CustomDelegate(boolean dragEnable, AnimationType contentViewAnimationType) {
         mIsDragEnable = dragEnable;
         mContentViewAnimationType = contentViewAnimationType;
+    }
+
+    public CustomDelegate(boolean dragEnable, AnimationType contentViewAnimationType, int contentViewHeight) {
+        mContentViewHeight = contentViewHeight;
+        mContentViewAnimationType = contentViewAnimationType;
+        mIsDragEnable = dragEnable;
     }
 
     @Override
@@ -63,17 +70,16 @@ public class CustomDelegate extends Delegate {
         mSweetView.setAnimationListener(new AnimationImp());
 
 
-
-        if(mContentView != null){
+        if (mContentView != null) {
             mContentRL.removeAllViews();
             mContentRL.addView(mContentView);
         }
-        if (mContentViewAnimationType == AnimationType.DuangLayoutAnimation  ) {
-            mAnimationView=null;
-            if(mContentView instanceof  ViewGroup){
-                mAnimationView= (ViewGroup) mContentView;
-            }else{
-                mAnimationView=mContentRL;
+        if (mContentViewAnimationType == AnimationType.DuangLayoutAnimation) {
+            mAnimationView = null;
+            if (mContentView instanceof ViewGroup) {
+                mAnimationView = (ViewGroup) mContentView;
+            } else {
+                mAnimationView = mContentRL;
             }
             Animation animation = AnimationUtils.loadAnimation(mContentRL.getContext(),
                     R.anim.item_duang_show);
@@ -83,10 +89,25 @@ public class CustomDelegate extends Delegate {
             mAnimationView.setLayoutAnimation(layoutAnimationController);
         }
 
+        if(mContentViewHeight > 0){
+            mFreeGrowUpParentRelativeLayout.setContentHeight(mContentViewHeight);
+        }
+
         return rootView;
     }
 
-    public void setMenuList(final List<MenuEntity> menuEntities) {
+    protected void setMenuList(final List<MenuEntity> menuEntities) {
+
+    }
+
+    public  CustomDelegate setContentHeight(int height){
+
+        if(height >0 && mFreeGrowUpParentRelativeLayout != null){
+            mFreeGrowUpParentRelativeLayout.setContentHeight(height);
+        }else{
+            mContentViewHeight=height;
+        }
+        return this;
 
     }
 
@@ -95,7 +116,7 @@ public class CustomDelegate extends Delegate {
     }
 
 
-    public void show() {
+    protected void show() {
         super.show();
         ViewGroup.LayoutParams lp =
                 new ViewGroup.LayoutParams
@@ -107,26 +128,26 @@ public class CustomDelegate extends Delegate {
 
     public CustomDelegate setCustomView(View view) {
 
-        if(mContentRL != null) {
+        if (mContentRL != null) {
             mContentRL.removeAllViews();
             mContentRL.addView(view);
-        }else{
-            mContentView=view;
+        } else {
+            mContentView = view;
         }
 
-        return  this;
+        return this;
     }
 
     public CustomDelegate setCustomView(View view, RelativeLayout.LayoutParams params) {
-        if(mContentRL != null) {
+        if (mContentRL != null) {
             mContentRL.removeAllViews();
             mContentRL.addView(view, params);
-        }else{
-            mContentView=view;
+        } else {
+            mContentView = view;
             mContentView.setLayoutParams(params);
         }
 
-        return  this;
+        return this;
     }
 
 
@@ -136,7 +157,7 @@ public class CustomDelegate extends Delegate {
     public CustomDelegate setCustomViewAnimation(ValueAnimator viewAnimation) {
 
         mContentViewValueAnimation = viewAnimation;
-        return  this;
+        return this;
     }
 
     class AnimationImp implements SweetView.AnimationListener {
@@ -213,6 +234,24 @@ public class CustomDelegate extends Delegate {
     }
 
     private void duangLayoutAnimation() {
+
+
+        mAnimationView.setLayoutAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+                mFreeGrowUpParentRelativeLayout.setClipChildren(false);
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                mFreeGrowUpParentRelativeLayout.setClipChildren(true);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
 
         mAnimationView.scheduleLayoutAnimation();
 

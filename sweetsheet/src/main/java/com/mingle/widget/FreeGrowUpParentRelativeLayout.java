@@ -46,13 +46,7 @@ public class FreeGrowUpParentRelativeLayout extends RelativeLayout implements Gr
 
         TypedArray typedArray=getContext().obtainStyledAttributes(attrs,
                 R.styleable.FreeGrowUpParentRelativeLayout);
-
-
         mOffset=  typedArray.getDimensionPixelOffset(R.styleable.FreeGrowUpParentRelativeLayout_offset,-1);
-
-
-
-
         typedArray.recycle();
     }
 
@@ -67,7 +61,6 @@ public class FreeGrowUpParentRelativeLayout extends RelativeLayout implements Gr
 
 
     private boolean checkGrowUpEnable() {
-
         if (getParent() != null && getParent() instanceof ViewGroup && isGrowUp) {
             parentHeight = ((ViewGroup) getParent()).getHeight();
             return true;
@@ -75,6 +68,8 @@ public class FreeGrowUpParentRelativeLayout extends RelativeLayout implements Gr
             return false;
         }
     }
+
+
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
@@ -141,6 +136,17 @@ public class FreeGrowUpParentRelativeLayout extends RelativeLayout implements Gr
                 break;
         }
         return true;
+    }
+
+    public void setContentHeight(int contentHeight){
+
+        originalHeight=-1;
+        ViewGroup.LayoutParams layoutParams = this.getLayoutParams();
+        layoutParams.height = contentHeight+getContext().getResources().getDimensionPixelOffset(R.dimen.arc_max_height);
+
+        requestLayout();
+
+
     }
 
 }

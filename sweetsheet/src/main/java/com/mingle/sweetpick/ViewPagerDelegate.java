@@ -9,6 +9,7 @@ import com.mingle.adapter.ViewpagerAdapter;
 import com.mingle.entity.MenuEntity;
 import com.mingle.viewhandler.MenuListViewHandler;
 import com.mingle.sweetsheet.R;
+import com.mingle.widget.FreeGrowUpParentRelativeLayout;
 import com.mingle.widget.IndicatorView;
 import com.mingle.widget.SweetView;
 import java.util.ArrayList;
@@ -28,39 +29,68 @@ public class ViewPagerDelegate extends Delegate {
     private ViewPager mViewPager;
     private SweetView mSweetView;
     private MenuListViewHandler mMenuListViewHandler;
+    private FreeGrowUpParentRelativeLayout mFreeGrowUpParentRelativeLayout;
     private SweetSheet.OnMenuItemClickListener mOnMenuItemClickListener;
     private  List<MenuEntity> mMenuEntities;
 
+    private int mNumColumns=3;
+    private int mContentViewHeight;
+
     public ViewPagerDelegate() {
+    }
+    public ViewPagerDelegate(int numColumns ) {
+        mNumColumns=numColumns;
+    }
+    public ViewPagerDelegate(int numColumns  ,int contentViewHeight) {
+        mNumColumns=numColumns;
+        mContentViewHeight=contentViewHeight;
     }
 
     @Override
     protected View createView() {
         View rootView = LayoutInflater.from(mParentVG.getContext()).inflate(R.layout.layout_vp_sweet, null, false);
         mSweetView = (SweetView) rootView.findViewById(R.id.sv);
+        mFreeGrowUpParentRelativeLayout = (FreeGrowUpParentRelativeLayout) rootView.findViewById(R.id.freeGrowUpParentF);
+
         mIndicatorView = (IndicatorView) rootView.findViewById(R.id.indicatorView);
         mIndicatorView.alphaDismiss(false);
         mSweetView.setAnimationListener(new AnimationImp());
         mViewPager = (ViewPager) rootView.findViewById(R.id.vp);
+
+        if(mContentViewHeight > 0){
+            mFreeGrowUpParentRelativeLayout.setContentHeight(mContentViewHeight);
+        }
+
         return rootView;
     }
 
 
+
+    public  ViewPagerDelegate setContentHeight(int height){
+
+        if(height >0 && mFreeGrowUpParentRelativeLayout != null){
+            mFreeGrowUpParentRelativeLayout.setContentHeight(height);
+        }else{
+            mContentViewHeight=height;
+        }
+        return this;
+
+    }
 
 
     protected void setMenuList(  List<MenuEntity> menuEntities) {
 
         mMenuEntities=menuEntities;
         mMenuListViewHandlers = new ArrayList<>();
-        int fragmentCount = menuEntities.size() / 6;
-        if (menuEntities.size() % 6 != 0) {
+        int fragmentCount = menuEntities.size() / (mNumColumns*2);
+        if (menuEntities.size() % (mNumColumns*2) != 0) {
             fragmentCount += 1;
         }
         for (int i = 0; i < fragmentCount; i++) {
 
-            int lastIndex = Math.min((i + 1) * 6, menuEntities.size());
+            int lastIndex = Math.min((i + 1) * (mNumColumns*2), menuEntities.size());
             MenuListViewHandler menuListViewHandler = MenuListViewHandler.getInstant
-                    (i, menuEntities.subList(i*6,lastIndex));
+                    (i,mNumColumns, menuEntities.subList(i*(mNumColumns*2),lastIndex));
             menuListViewHandler.setOnMenuItemClickListener(new OnFragmentInteractionListenerImp());
             mMenuListViewHandlers.add(menuListViewHandler);
         }

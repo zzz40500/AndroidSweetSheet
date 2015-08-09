@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
@@ -90,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
         mSweetSheet.setMenuList(list);
         //根据设置不同的 Delegate 来显示不同的风格.
         mSweetSheet.setDelegate(new RecyclerViewDelegate(true));
-        //根据设置不同效果来显示背景效果BlurEffect:模糊效果.DimEffect 变暗效果
+        //根据设置不同Effect 来显示背景效果BlurEffect:模糊效果.DimEffect 变暗效果
         mSweetSheet.setBackgroundEffect(new BlurEffect(8));
         //设置点击事件
         mSweetSheet.setOnMenuItemClickListener(new SweetSheet.OnMenuItemClickListener() {
@@ -110,8 +111,10 @@ public class MainActivity extends AppCompatActivity {
 
 
         mSweetSheet2 = new SweetSheet(rl);
+
+        //从menu 中设置数据源
         mSweetSheet2.setMenuList(R.menu.menu_sweet);
-        mSweetSheet2.setDelegate(new ViewPagerDelegate());
+        mSweetSheet2.setDelegate(new ViewPagerDelegate(4));
         mSweetSheet2.setBackgroundEffect(new DimEffect(0.5f));
         mSweetSheet2.setOnMenuItemClickListener(new SweetSheet.OnMenuItemClickListener() {
             @Override

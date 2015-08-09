@@ -33,10 +33,16 @@ public class RecyclerViewDelegate extends Delegate  {
     private CRImageView sliderIm;
     private FreeGrowUpParentRelativeLayout mFreeGrowUpParentRelativeLayout;
     private boolean mIsDragEnable;
+    private int mContentViewHeight;
 
     public RecyclerViewDelegate(boolean dragEnable) {
         mIsDragEnable=dragEnable;
 
+    }
+
+    public RecyclerViewDelegate(boolean dragEnable  ,int contentViewHeight) {
+        mContentViewHeight = contentViewHeight;
+        mIsDragEnable = dragEnable;
     }
 
     @Override
@@ -51,7 +57,23 @@ public class RecyclerViewDelegate extends Delegate  {
         sliderIm = (CRImageView) rootView.findViewById(R.id.sliderIM);
         mRV.setLayoutManager(new LinearLayoutManager(mParentVG.getContext(), LinearLayoutManager.VERTICAL, false));
         mSweetView.setAnimationListener(new AnimationImp());
+        if(mContentViewHeight > 0){
+            mFreeGrowUpParentRelativeLayout.setContentHeight(mContentViewHeight);
+        }
+
         return rootView;
+    }
+
+    public  RecyclerViewDelegate setContentHeight(int height){
+
+        if(height >0 && mFreeGrowUpParentRelativeLayout != null){
+            mFreeGrowUpParentRelativeLayout.setContentHeight(height);
+        }else{
+            mContentViewHeight=height;
+        }
+
+        return this;
+
     }
 
 
@@ -80,13 +102,14 @@ public class RecyclerViewDelegate extends Delegate  {
                         return true;
                     }
                 });
-
+                mFreeGrowUpParentRelativeLayout.setClipChildren(false);
             }
 
             @Override
             public void onAnimationEnd(Animation animation) {
                 mRV.setOnTouchListener(null);
 
+                mFreeGrowUpParentRelativeLayout.setClipChildren(true);
             }
 
             @Override

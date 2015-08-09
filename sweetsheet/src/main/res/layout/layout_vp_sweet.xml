@@ -2,13 +2,17 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
              android:layout_width="match_parent"
              android:layout_height="match_parent"
+             xmlns:app="http://schemas.android.com/apk/res-auto"
              android:orientation="vertical">
 
-    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                 android:layout_width="match_parent"
-                 android:layout_height="@dimen/sheet_height"
-                 android:layout_gravity="bottom"
-                 android:orientation="vertical">
+    <com.mingle.widget.FreeGrowUpParentRelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/sheet_height"
+        android:layout_gravity="bottom"
+        android:id="@+id/freeGrowUpParentF"
+        app:offset="@dimen/arc_max_height"
+        android:orientation="vertical">
 
         <com.mingle.widget.SweetView
             android:id="@+id/sv"
@@ -19,6 +23,7 @@
             android:id="@+id/indicatorView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
             android:layout_gravity="center_horizontal"
             android:paddingTop="70dp"/>
 
@@ -29,6 +34,6 @@
             android:layout_marginTop="42dp"
             android:clipChildren="false"
             android:overScrollMode="never"/>
+    </com.mingle.widget.FreeGrowUpParentRelativeLayout>
 
-    </FrameLayout>
 </FrameLayout>

@@ -51,47 +51,47 @@
     <item
         android:icon="@drawable/ic_account_child"
         android:orderInCategory="100"
-        android:title="------"
+        android:title="QQ"
         app:showAsAction="always"/>
     <item
         android:icon="@drawable/ic_account_child"
         android:orderInCategory="100"
-        android:title="------"
+        android:title="QQ"
         app:showAsAction="always"/>
     <item
         android:icon="@drawable/ic_account_child"
         android:orderInCategory="100"
-        android:title="------"
+        android:title="QQ"
         app:showAsAction="always"/>
     <item
         android:icon="@drawable/ic_account_child"
         android:orderInCategory="100"
-        android:title="------"
+        android:title="QQ"
         app:showAsAction="always"/>
     <item
         android:icon="@drawable/ic_account_child"
         android:orderInCategory="100"
-        android:title="------"
+        android:title="QQ"
         app:showAsAction="always"/>
     <item
         android:icon="@drawable/ic_account_child"
         android:orderInCategory="100"
-        android:title="------"
+        android:title="QQ"
         app:showAsAction="always"/>
     <item
         android:icon="@drawable/ic_account_child"
         android:orderInCategory="100"
-        android:title="------"
+        android:title="QQ"
         app:showAsAction="always"/>
     <item
         android:icon="@drawable/ic_account_child"
         android:orderInCategory="100"
-        android:title="------"
+        android:title="QQ"
         app:showAsAction="always"/>
     <item
         android:icon="@drawable/ic_account_child"
         android:orderInCategory="100"
-        android:title="------"
+        android:title="QQ"
         app:showAsAction="always"/>
 
 </menu>

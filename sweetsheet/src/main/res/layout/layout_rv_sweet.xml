@@ -24,7 +24,7 @@
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:layout_gravity="bottom"
-            android:paddingTop="70dp"
+            android:layout_marginTop="70dp"
             android:clipChildren="false"
             android:layoutAnimation="@anim/rv_layout_animation"
             android:overScrollMode="never"

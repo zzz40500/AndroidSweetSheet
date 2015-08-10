@@ -11,7 +11,21 @@
 
 [![我的微博](http://www.easyicon.net/api/resizeApi.php?id=1164436&size=24)](http://weibo.com/u/5579192921/home?wvr=5)
 
- 
+ ###gradle###         
+jitpack.io        
+/build.gradle
+~~~
+repositories {
+    maven {
+        url "https://jitpack.io"
+    }
+}
+~~~
+/app/build.gradle
+~~~
+compile compile 'com.github.zzz40500:AndroidSweetSheet:1.1.0''
+~~~
+
 ~~~
 
 // SweetSheet 控件,根据 rl 确认位置
@@ -72,11 +86,7 @@ view.findViewById(R.id.button2).setOnClickListener(new View.OnClickListener() {
     }
 
 ~~~
-
-###gradle
-~~~
-在等等....
-~~~
+ 
 
 ###v1.1(版本说明)
 1. 去掉之前ViewPager 使用FragmentStatePagerAdapter 做为它的适配器.

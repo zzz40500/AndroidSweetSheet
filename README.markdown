@@ -1,5 +1,4 @@
 一个富有动感的 Sheet,
-[github](https://github.com/zzz40500/AndroidSweetSheet)
 先发两张图:
 ![原型.GIF](https://github.com/zzz40500/AndroidSweetSheet/raw/master/screenshot/Design.gif)
 
@@ -7,7 +6,12 @@
 
 ###Usage:
 [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-AndroidSweetSheet-green.svg?style=flat)](https://android-arsenal.com/details/1/2271)
-MainActivity.class
+
+[![Android Gems](http://www.android-gems.com/badge/zzz40500/AndroidSweetSheet.svg?branch=master)](http://www.android-gems.com/lib/zzz40500/AndroidSweetSheet)
+
+[![我的微博](http://www.easyicon.net/api/resizeApi.php?id=1164436&size=24)](http://weibo.com/u/5579192921/home?wvr=5)
+
+ 
 ~~~
 
 // SweetSheet 控件,根据 rl 确认位置

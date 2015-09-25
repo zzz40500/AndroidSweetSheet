@@ -176,4 +176,8 @@ public class SweetView extends View {
         void onContentShow();
 
     }
+
+    public void setSweetSheetColor(int color) {
+        mPaint.setColor(color);
+    }
 }

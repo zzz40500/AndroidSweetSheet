@@ -44,6 +44,7 @@ public class CustomDelegate extends Delegate {
     private ValueAnimator mContentViewValueAnimation;
 
     private int mContentViewHeight;
+    private int sweetSheetColor;
 
 
     public CustomDelegate(boolean dragEnable, AnimationType contentViewAnimationType) {
@@ -64,6 +65,7 @@ public class CustomDelegate extends Delegate {
                 .inflate(R.layout.layout_custom_sweet, null, false);
 
         mSweetView = (SweetView) rootView.findViewById(R.id.sv);
+	mSweetView.setSweetSheetColor(sweetSheetColor);
         mFreeGrowUpParentRelativeLayout = (FreeGrowUpParentRelativeLayout) rootView.findViewById(R.id.freeGrowUpParentF);
         mContentRL = (RelativeLayout) rootView.findViewById(R.id.rl);
         sliderIm = (CRImageView) rootView.findViewById(R.id.sliderIM);
@@ -270,5 +272,9 @@ public class CustomDelegate extends Delegate {
         AlphaAnimation,
         //自定义的动画,需要调用
         Custom
+    }
+
+    public void setSweetSheetColor(int sweetSheetColor) {
+        this.sweetSheetColor = sweetSheetColor;
     }
 }

@@ -3,7 +3,9 @@ package com.mingle.sweetpick;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -15,11 +17,13 @@ import com.mingle.utils.Blur;
  * @version 1.0
  * @date 2015/8/9.
  * @github: https://github.com/zzz40500
- *
  */
-public class BlurEffect implements   Effect {
+public class BlurEffect implements Effect {
 
     private float Value;
+
+
+    private BlurAsyncTask mBlurAsyncTask;
 
     public BlurEffect(float value) {
         Value = value;
@@ -36,7 +40,13 @@ public class BlurEffect implements   Effect {
 
     @Override
     public void effect(ViewGroup vp, ImageView view) {
-        new BlurAsyncTask(vp,view,Blur.convertFromView(vp)).execute((int)Value);
+
+        if(mBlurAsyncTask!= null){
+            mBlurAsyncTask.cancel(true);
+        }
+
+        mBlurAsyncTask= new BlurAsyncTask(vp, view, Blur.convertFromView(vp));
+        mBlurAsyncTask.execute((int) Value);
     }
 
 
@@ -47,14 +57,15 @@ public class BlurEffect implements   Effect {
 
         private View mViewGroup;
         private ImageView mImageView;
-        
+
         private Bitmap mOriginalBitmap;
 
         private Context mContext;
 
-//
+//        private long starTime;
 
-        public BlurAsyncTask( View viewGroup, ImageView imageView,Bitmap originalBitmap) {
+
+        public BlurAsyncTask(View viewGroup, ImageView imageView, Bitmap originalBitmap) {
             mOriginalBitmap = originalBitmap;
             mViewGroup = viewGroup;
             mImageView = imageView;
@@ -63,7 +74,9 @@ public class BlurEffect implements   Effect {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            mContext=mViewGroup.getContext();
+            mContext = mViewGroup.getContext();
+            mImageView.setImageBitmap(null);
+//            starTime=System.currentTimeMillis();
 //
         }
 
@@ -71,10 +84,18 @@ public class BlurEffect implements   Effect {
         protected Bitmap doInBackground(Integer... params) {
             //process to the blue
             if (!isCancelled() && mOriginalBitmap != null) {
-                Bitmap bm=Blur.fastblur(mContext, mOriginalBitmap, params[0]);
+
+//                Bitmap b
+//                        =Bitmap.createScaledBitmap(mOriginalBitmap, mOriginalBitmap.getWidth() / 4,
+//                        mOriginalBitmap.getHeight() / 4, false);
+//
+//                if (b == null) {
+//                    b = mOriginalBitmap;
+//                }
+                Bitmap bm = Blur.fastblur(mContext, mOriginalBitmap, params[0]);
                 mOriginalBitmap.recycle();
-                mOriginalBitmap =null;
-                return  bm;
+                mOriginalBitmap = null;
+                return bm;
             } else {
                 return null;
             }
@@ -86,9 +107,11 @@ public class BlurEffect implements   Effect {
         @SuppressLint("NewApi")
         protected void onPostExecute(Bitmap bitmap) {
             super.onPostExecute(bitmap);
-            if(bitmap != null){
+            if (bitmap != null) {
                 mImageView.setImageBitmap(bitmap);
             }
+
+//            Log.e("tag",System.currentTimeMillis()-starTime+"ms");
             mViewGroup.destroyDrawingCache();
             mViewGroup.setDrawingCacheEnabled(false);
             mViewGroup = null;

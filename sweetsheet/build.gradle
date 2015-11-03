@@ -36,7 +36,7 @@ group = "com.mingle.zzz40500"
 
 //install {
 //    repositories.mavenInstaller {
-//        // This generates POM.xml with proper parameters
+//         This generates POM.xml with proper parameters
 //        pom {
 //            project {
 //                packaging 'aar'

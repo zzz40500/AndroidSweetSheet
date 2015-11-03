@@ -5,13 +5,49 @@
                 android:background="#ff8b90af"
                 android:id="@+id/rl"
                 tools:context=".MainActivity">
-    <ImageView
-        android:layout_width="48dp"
 
-        android:layout_marginTop="100dp"
-        android:src="@mipmap/ic_launcher"
-        android:layout_centerHorizontal="true"
-        android:layout_height="48dp"/>
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:orientation="vertical"
+            android:layout_height="fill_parent">
+
+            <ImageView
+                android:layout_width="48dp"
+                android:layout_margin="20dp"
+
+                android:src="@mipmap/ic_launcher"
+                android:layout_gravity="center_horizontal"
+                android:layout_height="200dp"/>
+            <ImageView
+                android:layout_width="48dp"
+                android:layout_margin="100dp"
+
+                android:src="@mipmap/ic_launcher"
+                android:layout_gravity="center_horizontal"
+                android:layout_height="400dp"/>
+            <ImageView
+                android:layout_width="48dp"
+                android:layout_margin="100dp"
+
+                android:src="@mipmap/ic_launcher"
+                android:layout_gravity="center_horizontal"
+                android:layout_height="400dp"/>
+            <ImageView
+                android:layout_width="48dp"
+                android:layout_margin="100dp"
+
+                android:src="@mipmap/ic_launcher"
+                android:layout_gravity="center_horizontal"
+                android:layout_height="400dp"/>
+
+
+        </LinearLayout>
+
+    </ScrollView>
+
 
 
 

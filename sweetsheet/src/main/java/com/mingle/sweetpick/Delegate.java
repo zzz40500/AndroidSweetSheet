@@ -58,10 +58,12 @@ public abstract class Delegate implements View.OnClickListener {
         switch (mStatus) {
 
             case SHOW:
+            case SHOWING:
                 dismiss();
                 break;
 
             case DISMISS:
+            case DISMISSING:
                 show();
                 break;
 
@@ -90,6 +92,11 @@ public abstract class Delegate implements View.OnClickListener {
         mEffect.effect(mParentVG,mBg);
         ViewGroup.LayoutParams lp =
                 new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+
+        if(mBg.getParent()!= null){
+            mParentVG.removeView(mBg);
+        }
+
         mParentVG.addView(mBg, lp);
         ViewHelper.setAlpha(mBg, 0);
         ObjectAnimator objectAnimator = ObjectAnimator.ofFloat(mBg, "alpha", 0, 1);

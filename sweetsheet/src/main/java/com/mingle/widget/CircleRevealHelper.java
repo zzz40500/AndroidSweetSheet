@@ -56,11 +56,18 @@ public class CircleRevealHelper {
 
 
 
-    public void circularReveal(int centerX, int centerY, float startRadius, float endRadius, long duration, Interpolator interpolator) {
+    public  void circularReveal(int centerX, int centerY, float startRadius, float endRadius, long duration, Interpolator interpolator) {
 
         mAnchorX = centerX;
         mAnchorY = centerY;
+        if (mView.getParent() == null){
+            return;
+        }
+
+
         if (Build.VERSION.SDK_INT >= 21) {
+
+
             Animator animator = ViewAnimationUtils.createCircularReveal(
                     mView,
                     mAnchorX,

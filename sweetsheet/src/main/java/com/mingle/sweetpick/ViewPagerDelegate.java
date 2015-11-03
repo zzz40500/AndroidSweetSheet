@@ -66,6 +66,11 @@ public class ViewPagerDelegate extends Delegate {
 
 
 
+    @Override
+    protected void dismiss() {
+        super.dismiss();
+    }
+
     public  ViewPagerDelegate setContentHeight(int height){
 
         if(height >0 && mFreeGrowUpParentRelativeLayout != null){
@@ -121,6 +126,11 @@ public class ViewPagerDelegate extends Delegate {
     protected void show() {
         super.show();
         ViewGroup.LayoutParams lp = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+
+        if (mRootView.getParent() != null) {
+            mParentVG.removeView(mRootView);
+        }
+
         mParentVG.addView(mRootView, lp);
         mSweetView.show();
     }
@@ -166,17 +176,19 @@ public class ViewPagerDelegate extends Delegate {
 
         @Override
         public void onEnd() {
-            mStatus = SweetSheet.Status.SHOW;
-            mIndicatorView.alphaShow(true);
+            if( mStatus==SweetSheet.Status.SHOWING) {
+                mIndicatorView.alphaShow(true);
 
-            mIndicatorView.setVisibility(View.VISIBLE);
+                mIndicatorView.setVisibility(View.VISIBLE);
 
-            mIndicatorView.circularReveal(
-                    mIndicatorView.getWidth() / 2,
-                    mIndicatorView.getHeight() / 2,
-                    0,
-                    mIndicatorView.getWidth(), 2000, new DecelerateInterpolator());
+                mIndicatorView.circularReveal(
+                        mIndicatorView.getWidth() / 2,
+                        mIndicatorView.getHeight() / 2,
+                        0,
+                        mIndicatorView.getWidth(), 2000, new DecelerateInterpolator());
+                mStatus = SweetSheet.Status.SHOW;
 
+            }
         }
 
         @Override

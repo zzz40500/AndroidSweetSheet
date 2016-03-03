@@ -70,6 +70,7 @@ public class MenuRVAdapter extends RecyclerView.Adapter<MenuRVAdapter.MenuVH> {
             menuVH.iv.setVisibility(View.GONE);
         }
         menuVH.nameTV.setText(menuEntity.title);
+        menuVH.nameTV.setTextColor(menuEntity.titleColor);
         if (mIsAnimation) {
             animation(menuVH);
         }

@@ -63,13 +63,15 @@ public class MainActivity extends AppCompatActivity {
 
     private void setupRecyclerView() {
 
-        ArrayList<MenuEntity> list = new ArrayList<>();
+        final ArrayList<MenuEntity> list = new ArrayList<>();
         //添加假数据
         MenuEntity menuEntity1 = new MenuEntity();
         menuEntity1.iconId = R.drawable.ic_account_child;
+        menuEntity1.titleColor = 0xff000000;
         menuEntity1.title = "code";
         MenuEntity menuEntity = new MenuEntity();
         menuEntity.iconId = R.drawable.ic_account_child;
+        menuEntity.titleColor = 0xffb3b3b3;
         menuEntity.title = "QQ";
         list.add(menuEntity1);
         list.add(menuEntity);
@@ -97,10 +99,13 @@ public class MainActivity extends AppCompatActivity {
         mSweetSheet.setOnMenuItemClickListener(new SweetSheet.OnMenuItemClickListener() {
             @Override
             public boolean onItemClick(int position, MenuEntity menuEntity1) {
+                //即时改变当前项的颜色
+                list.get(position).titleColor = 0xff5823ff;
+                ((RecyclerViewDelegate) mSweetSheet.getDelegate()).notifyDataSetChanged();
 
                 //根据返回值, true 会关闭 SweetSheet ,false 则不会.
                 Toast.makeText(MainActivity.this, menuEntity1.title + "  " + position, Toast.LENGTH_SHORT).show();
-                return true;
+                return false;
             }
         });
 

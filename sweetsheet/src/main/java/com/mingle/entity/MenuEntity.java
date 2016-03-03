@@ -4,6 +4,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.DrawableRes;
+import android.support.annotation.ColorInt;
 
 
 /**
@@ -15,6 +16,7 @@ import android.support.annotation.DrawableRes;
 public class MenuEntity {
 
     public @DrawableRes int iconId;
+    public @ColorInt int titleColor;
     public CharSequence title;
     public Drawable icon;
 

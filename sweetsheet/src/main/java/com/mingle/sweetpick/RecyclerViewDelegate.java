@@ -120,6 +120,10 @@ public class RecyclerViewDelegate extends Delegate  {
 
     }
 
+    public void notifyDataSetChanged() {
+        mMenuRVAdapter.notifyDataSetChanged();
+    }
+
     protected void show() {
         super.show();
         ViewGroup.LayoutParams lp =

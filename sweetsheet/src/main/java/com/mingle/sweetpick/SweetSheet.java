@@ -66,6 +66,10 @@ public class SweetSheet {
 
     }
 
+    public Delegate getDelegate() {
+        return mDelegate;
+    }
+
 
     private void setup() {
 

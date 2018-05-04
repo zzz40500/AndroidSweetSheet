@@ -22,7 +22,7 @@ repositories {
 ~~~
 /app/build.gradle
 ~~~
-compile 'com.github.zzz40500:AndroidSweetSheet:1.1.0'
+implementation 'com.github.zzz40500:AndroidSweetSheet:1.1.0'
 ~~~
 ###Usage:
 
